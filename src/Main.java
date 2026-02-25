@@ -1,33 +1,77 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
+
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 
 public class Main {
+
+
+    public static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+
+        while (current != null) {
+            Node nextTemp = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextTemp;
+        }
+        return prev;
+    }
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to Palindrome Checker App");
 
         Scanner sc = new Scanner(System.in);
-
         System.out.print("Enter a word: ");
         String word = sc.nextLine();
 
 
-        Deque<Character> deque = new ArrayDeque<>();
+        Node head = null, tail = null;
 
-
-        for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
+        for (char ch : word.toCharArray()) {
+            Node newNode = new Node(ch);
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
+
+
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+
+        Node secondHalf = reverse(slow);
+
+
+        Node firstHalf = head;
+        Node tempSecond = secondHalf;
 
         boolean isPalindrome = true;
 
-
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
+        while (tempSecond != null) {
+            if (firstHalf.data != tempSecond.data) {
                 isPalindrome = false;
                 break;
             }
+            firstHalf = firstHalf.next;
+            tempSecond = tempSecond.next;
         }
 
 
