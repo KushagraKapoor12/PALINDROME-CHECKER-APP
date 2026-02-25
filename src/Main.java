@@ -10,15 +10,26 @@ public class Main {
         System.out.print("Enter a word: ");
         String word = sc.nextLine();
 
-        // 🔁 reverse using for loop (UC3 requirement)
-        String reversed = "";
 
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reversed = reversed + word.charAt(i);
+        char[] arr = word.toCharArray();
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        boolean isPalindrome = true;
+
+
+        while (left < right) {
+            if (arr[left] != arr[right]) {
+                isPalindrome = false;
+                break;
+            }
+            left++;
+            right--;
         }
 
-        // 🔍 compare using equals()
-        if (word.equals(reversed)) {
+
+        if (isPalindrome) {
             System.out.println(word + " is a Palindrome");
         } else {
             System.out.println(word + " is NOT a Palindrome");
