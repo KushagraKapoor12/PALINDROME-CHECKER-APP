@@ -10,11 +10,15 @@ public class Main {
         String input = sc.nextLine();
 
 
-        PalindromeChecker checker = new PalindromeChecker();
-        boolean result = checker.checkPalindrome(input);
+        PalindromeStrategy strategy = new DequeStrategy();
+
+
+        PalindromeService service = new PalindromeService(strategy);
+
+        boolean result = service.check(input);
 
         if (result) {
-            System.out.println("Palindrome (OOP Service)");
+            System.out.println("Palindrome (Strategy Pattern)");
         } else {
             System.out.println("NOT a Palindrome");
         }
